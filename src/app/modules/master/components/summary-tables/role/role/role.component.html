@@ -1,0 +1,6 @@
+<app-datatable
+  (buttonFunction)="action($event)"
+  (paginationParams)="searchFunction($event)"
+  [dataSource]="rolesList"
+  [headers]="roleHeaders.columnsMetadata"
+></app-datatable>
