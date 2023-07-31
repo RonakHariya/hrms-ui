@@ -4,6 +4,9 @@ import {
   MatDialog,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { RoleService } from '../../services/role.service';
+import { Router } from '@angular/router';
+import { ApiResponse } from '../../models/response';
 @Component({
   selector: 'app-popup-content',
   templateUrl: './popup-content.component.html',
@@ -15,7 +18,7 @@ export class PopupContentComponent {
     public dialogRef: MatDialogRef<PopupContentComponent>
   ) {}
 
-  closeDialog() {
+  cancelOperation() {
     this.dialogRef.close();
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { ColumnsMetadata } from '../models/columnMetaData';
@@ -48,5 +48,16 @@ export class DesignationService {
     return this.http.delete<ApiResponse>(
       'http://localhost:8080/employee/designation/delete/' + designationId
     );
+  }
+
+  search(
+    params: HttpParams
+  ): Observable<{ content: Array<Designation>; totalElements: number }> {
+    return this.http.get<{
+      content: Array<Designation>;
+      totalElements: number;
+    }>('http://localhost:8080/designation/search', {
+      params: params,
+    });
   }
 }

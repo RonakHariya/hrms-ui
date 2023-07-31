@@ -17,18 +17,23 @@
                 type="text"
                 data-kt-user-table-filter="search"
                 [(ngModel)]="searchTerm"
+                (input)="searchFunction()"
                 class="form-control form-control-solid search"
                 placeholder="search here"
               />
-              <button (click)="searchFunction()">Search</button>
+              <!-- <button (click)="searchFunction()">Search</button> -->
             </div>
             <div class="cardtoolbar d-flex">
               <div class="d-flex">
-                <select class="btn ml-1 pagination-box">
-                  <option>5</option>
-                  <option>10</option>
-                  <option>15</option>
-                  <option>20</option>
+                <select
+                  class="btn ml-1 pagination-box"
+                  [(ngModel)]="pagination.pageSize"
+                  (change)="changePageSize()"
+                >
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
                 </select>
                 <button class="action-btn" (click)="buttonEvent('add')">
                   <i class="fa fa-plus icon-class" aria-hidden="true"></i>
@@ -68,9 +73,21 @@
               rowspan="1"
               colspan="1"
               aria-label="User: activate to sort column ascending"
+              (click)="sort(header.sortBy)"
             >
               {{ header.name | uppercase }}
-              <span><i class="fa fa-sort" aria-hidden="true"></i></span>
+              <span
+                *ngIf="header.sortBy != pagination.sortKey; else other_content"
+                ><i class="fa fa-sort" aria-hidden="true"></i
+              ></span>
+              <ng-template #other_content>
+                <span *ngIf="pagination.sortType == 'DESC'"
+                  ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                ></span>
+                <span *ngIf="pagination.sortType == 'ASC'"
+                  ><i class="fas fa-sort-up"></i
+                ></span>
+              </ng-template>
             </th>
           </thead>
           <tbody class="tbody">
@@ -122,36 +139,20 @@
               ><i class="fa fa-angle-double-left"></i
             ></a>
           </li>
-          <li class="paginate_button page-item">
+          <li
+            class="paginate_button page-item"
+            *ngFor="let page of paginationList"
+          >
             <a
-              href="#"
               aria-controls="kt_table_users"
               data-dt-idx="1"
               tabindex="0"
               class="page-link"
-              >1</a
+              (click)="changePage(page)"
+              >{{ page + 1 }}</a
             >
           </li>
-          <li class="paginate_button page-item active">
-            <a
-              href="#"
-              aria-controls="kt_table_users"
-              data-dt-idx="2"
-              tabindex="0"
-              class="page-link"
-              >2</a
-            >
-          </li>
-          <li class="paginate_button page-item">
-            <a
-              href="#"
-              aria-controls="kt_table_users"
-              data-dt-idx="3"
-              tabindex="0"
-              class="page-link"
-              >3</a
-            >
-          </li>
+
           <li class="paginate_button page-item next" id="kt_table_users_next">
             <a
               href="#"

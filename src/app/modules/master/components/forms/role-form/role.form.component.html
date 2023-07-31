@@ -11,10 +11,22 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="Role Id"
+                    placeholder="Role ID - AVI-001"
                     formControlName="roleId"
                     class=""
+                    pattern="^[a-zA-Z]+[-][a-zA-Z0-9]+$"
                   />
+                  <small
+                    class="text-danger"
+                    *ngIf="roleIdControl?.invalid && roleIdControl?.touched"
+                  >
+                    <ng-container *ngIf="roleIdControl?.errors?.['required']">
+                      Please Enter Valid Role Code
+                    </ng-container>
+                    <ng-container *ngIf="roleIdControl?.errors?.['pattern']">
+                      Invalid roleId pattern. Please use the format 'AVI-0123'
+                    </ng-container>
+                  </small>
                 </mat-form-field>
               </div>
             </div>
@@ -24,10 +36,26 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="Role Name"
+                    placeholder="Role Name - HR"
                     class=""
                     formControlName="roleName"
+                    [disabled]="
+                      roleForm.get('roleId')?.value === null ||
+                      roleForm.get('roleId')?.value === ''
+                    "
+                    pattern="^[a-zA-Z ]*$"
                   />
+                  <small
+                    class="text-danger"
+                    *ngIf="roleNameControl?.invalid && roleNameControl?.touched"
+                  >
+                    <ng-container *ngIf="roleNameControl?.errors?.['required']">
+                      Please Enter Valid Role Name
+                    </ng-container>
+                    <ng-container *ngIf="roleNameControl?.errors?.['pattern']">
+                      Invalid Role Name pattern. Please use the format 'Account'
+                    </ng-container>
+                  </small>
                 </mat-form-field>
               </div>
             </div>
@@ -40,7 +68,26 @@
                     placeholder="Org Code"
                     class=""
                     formControlName="orgCode"
+                    [disabled]="
+                      roleForm.get('roleId')?.value === null ||
+                      roleForm.get('roleId')?.value === '' ||
+                      roleForm.get('roleName')?.value === null ||
+                      roleForm.get('roleName')?.value === ''
+                    "
+                    pattern="[^0-9][a-zA-Z0-9]*"
                   />
+                  <small
+                    class="text-danger"
+                    *ngIf="orgControl?.invalid && orgControl?.touched"
+                  >
+                    <ng-container *ngIf="orgControl?.errors?.['required']">
+                      Please Enter Valid Org Code
+                    </ng-container>
+                    <ng-container *ngIf="orgControl?.errors?.['pattern']">
+                      Invalid Org Code pattern. Please use the format
+                      'bazinga123'
+                    </ng-container>
+                  </small>
                 </mat-form-field>
               </div>
             </div>

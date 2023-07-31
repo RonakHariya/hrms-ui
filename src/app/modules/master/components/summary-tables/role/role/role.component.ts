@@ -14,14 +14,14 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./role.component.scss'],
 })
 export class RoleComponent {
-  rolesList!: Array<Role>;
+  roleMetaData: { content: Array<Role>; totalElements: number } = {
+    content: [],
+    totalElements: 0,
+  };
   roleHeaders: { columnsMetadata: Array<ColumnsMetadata> } = {
     columnsMetadata: [],
   };
-  data: { event: string; data: {} } = {
-    event: '',
-    data: Array<Role>,
-  };
+
   role!: Role;
   @Output() sendDataEvnt = new EventEmitter<number>();
 
@@ -38,18 +38,6 @@ export class RoleComponent {
     params = params.set('page', 0);
     params = params.set('size', 10);
     this.searchFunction(params);
-  }
-
-  getData() {
-    this.roleService.getRoles().subscribe(
-      (response: Array<Role>) => {
-        console.log('GET-ROLES Request successful', response);
-        this.rolesList = response;
-      },
-      (error: any) => {
-        console.error('GET Request failed', error);
-      }
-    );
   }
 
   getHeaders() {
@@ -74,7 +62,7 @@ export class RoleComponent {
         this.roleService.deleteRole(event['data'].roleId).subscribe(
           (response: ApiResponse) => {
             console.log('DELETE-ROLE Request successful', response);
-            this.openPopup('Role deleted successfully!!');
+            this.openPopup('Role Deleted successfully..');
             this.router.navigate(['/master/role']);
           },
           (error: any) => {
@@ -106,7 +94,7 @@ export class RoleComponent {
       .subscribe((data: { content: Array<Role>; totalElements: number }) => {
         console.log(data.content);
         console.log(data.totalElements);
-        this.rolesList = data.content;
+        this.roleMetaData = data;
       });
   }
 }

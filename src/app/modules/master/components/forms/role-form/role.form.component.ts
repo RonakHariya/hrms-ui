@@ -52,8 +52,34 @@ export class RoleFormComponent {
       orgCode: ['', Validators.required],
       createdBy: ['Admin'],
     });
+
+    this.roleForm.get('roleId')?.valueChanges.subscribe((value) => {
+      if (value !== null && value !== '') {
+        this.roleForm.get('roleName')?.enable();
+      } else {
+        this.roleForm.get('roleName')?.disable();
+        this.roleForm.get('orgCode')?.disable();
+      }
+    });
+
+    this.roleForm.get('roleName')?.valueChanges.subscribe((value) => {
+      if (value !== null && value !== '') {
+        this.roleForm.get('orgCode')?.enable();
+      } else {
+        this.roleForm.get('orgCode')?.disable();
+      }
+    });
   }
 
+  get roleIdControl() {
+    return this.roleForm.get('roleId');
+  }
+  get roleNameControl() {
+    return this.roleForm.get('roleName');
+  }
+  get orgControl() {
+    return this.roleForm.get('orgCode');
+  }
   onSumbit() {
     if (this.roleForm.valid) {
       const formData = this.roleForm.value;
