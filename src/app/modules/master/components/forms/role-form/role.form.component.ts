@@ -8,7 +8,6 @@ import {
 import { RoleService } from '../../../services/role.service';
 import { Role } from '../../../models/role.model';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupContentComponent } from '../../popup-content/popup-content.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
@@ -35,6 +34,7 @@ export class RoleFormComponent {
 
     this.route.queryParams.subscribe((params) => {
       this.queryParams = params;
+
       if (this.queryParams['id'] != undefined) {
         this.actionLabel = 'Update';
         this.getById(this.queryParams['id']);
@@ -48,8 +48,8 @@ export class RoleFormComponent {
     this.roleForm = this.formBuilder.group({
       id: [''],
       roleId: ['', Validators.required],
-      roleName: ['', Validators.required],
-      orgCode: ['', Validators.required],
+      roleName: [{ value: '', disabled: true }, Validators.required],
+      orgCode: [{ value: '', disabled: true }, Validators.required],
       createdBy: ['Admin'],
     });
 
@@ -88,8 +88,8 @@ export class RoleFormComponent {
         this.roleService.createRole(formData).subscribe(
           (response: Array<Role>) => {
             console.log('POST-ROLE Request successful', response);
-            this.openPopup('Role Addes successfully..!');
             this.router.navigate(['/master/role']);
+            this.roleService.notify('Role Added successfully..!');
           },
           (error: any) => {
             console.error('POST Request failed', error);
@@ -100,8 +100,8 @@ export class RoleFormComponent {
         this.roleService.updateRole(formData).subscribe(
           (response: Array<Role>) => {
             console.log('PUT-ROLE Request successful', response);
-            //this.openPopup('Role updated successfully..!');
-            //this.router.navigate(['/master/role']);
+            this.roleService.notify('Role Updated successfully..!');
+            this.router.navigate(['/master/role']);
           },
           (error: any) => {
             console.error('PUT Request failed', error);
@@ -109,14 +109,6 @@ export class RoleFormComponent {
         );
       }
     }
-  }
-
-  openPopup(message: string) {
-    this.dialog.open(PopupContentComponent, {
-      width: '600px',
-      height: '200px',
-      data: { message: message },
-    });
   }
 
   getById(id: string) {

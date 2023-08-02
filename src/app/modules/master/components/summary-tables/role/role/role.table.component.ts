@@ -3,17 +3,22 @@ import { Role } from '../../../../models/role.model';
 import { RoleService } from '../../../../services/role.service';
 import { ColumnsMetadata } from '../../../../models/columnMetaData';
 import { Data, Router } from '@angular/router';
-import { PopupContentComponent } from '../../../popup-content/popup-content.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ApiResponse } from 'src/app/modules/master/models/response';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { PopupComponent } from '../../../helper/popup/popup.component';
+import { ApiResponse } from 'src/app/modules/master/models/response';
 
 @Component({
   selector: 'app-role',
-  templateUrl: './role.component.html',
-  styleUrls: ['./role.component.scss'],
+  templateUrl: './role.table.component.html',
+  styleUrls: ['./role.table.component.scss'],
 })
 export class RoleComponent {
+  @Output() sendDataEvnt = new EventEmitter<number>();
+
   roleMetaData: { content: Array<Role>; totalElements: number } = {
     content: [],
     totalElements: 0,
@@ -22,9 +27,6 @@ export class RoleComponent {
     columnsMetadata: [],
   };
 
-  role!: Role;
-  @Output() sendDataEvnt = new EventEmitter<number>();
-
   constructor(
     private roleService: RoleService,
     private router: Router,
@@ -32,7 +34,6 @@ export class RoleComponent {
   ) {}
 
   ngOnInit(): void {
-    //this.getData();
     this.getHeaders();
     let params = new HttpParams();
     params = params.set('page', 0);
@@ -56,20 +57,46 @@ export class RoleComponent {
   action(event: Data) {
     let type: string = event['event'];
     let id: string = event['data'].roleId;
+
     const queryParam = { id: id };
+
     switch (type) {
       case 'delete':
+        //const dataToSend = id;
+        //this.roleService.sendData(dataToSend);
+
+        // const dialogConfig = new MatDialogConfig();
+        // dialogConfig.disableClose = true;
+        // dialogConfig.autoFocus = true;
+        // dialogConfig.width = '60%';
+        // this.dialog.open(PopupComponent);
+        //this.roleService.sendData(id);
+        //this.openPopup('Are ou sure want to delete ?', id);
+        // this.roleService.deleteRole(event['data'].roleId).subscribe(
+        //   (response: ApiResponse) => {
+        //     console.log('DELETE-ROLE Request successful', response);
+
+        //     this.openPopup('Role Deleted successfully..');
+        //     this.router.navigate(['/master/role']);
+        //   },
+        //   (error: any) => {
+        //     console.error('DELETE-ROLE Request failed', error);
+        //   }
+        // );
+        //this.roleService.notify('Role Deleted successfully..!');
         this.roleService.deleteRole(event['data'].roleId).subscribe(
           (response: ApiResponse) => {
             console.log('DELETE-ROLE Request successful', response);
-            this.openPopup('Role Deleted successfully..');
+            this.openPopup('Role deleted successfully!!');
             this.router.navigate(['/master/role']);
+            this.roleService.notify('Role Deleted successfully..!');
           },
           (error: any) => {
             console.error('DELETE-ROLE Request failed', error);
           }
         );
         break;
+
       case 'add':
         this.router.navigate(['/master/roleForm']);
         break;
@@ -81,7 +108,7 @@ export class RoleComponent {
   }
 
   openPopup(message: string) {
-    this.dialog.open(PopupContentComponent, {
+    this.dialog.open(PopupComponent, {
       width: '600px',
       height: '200px',
       data: { message: message },

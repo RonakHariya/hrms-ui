@@ -5,17 +5,12 @@ import { Observable } from 'rxjs';
 import { ColumnsMetadata } from '../models/columnMetaData';
 import { Designation } from '../models/designation.model';
 import { ApiResponse } from '../models/response';
+import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class DesignationService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastrService: ToastrService) {}
 
   ngOnInit(): void {}
-
-  getDesignations(): Observable<Array<Designation>> {
-    return this.http.get<Array<Designation>>(
-      'http://localhost:8080/designation/get-all'
-    );
-  }
 
   getDesignationHeaders(): Observable<{
     columnsMetadata: Array<ColumnsMetadata>;
@@ -26,6 +21,8 @@ export class DesignationService {
   }
 
   createDesignation(data: Designation): Observable<Array<Designation>> {
+    console.log('in create service', data);
+
     return this.http.post<Array<Designation>>(
       'http://localhost:8080/employee/designation/create',
       data
@@ -34,10 +31,12 @@ export class DesignationService {
 
   searchDesignationById(id: string): Observable<Designation> {
     return this.http.get<Designation>(
-      'http://localhost:8080/designation/' + id
+      'http://localhost:8080/employee/designation/' + id
     );
   }
+
   updateDesignation(data: Designation): Observable<Array<Designation>> {
+    console.log(data);
     return this.http.put<Array<Designation>>(
       'http://localhost:8080/employee/designation/update',
       data
@@ -46,7 +45,7 @@ export class DesignationService {
 
   deleteDesignation(designationId: string): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(
-      'http://localhost:8080/employee/designation/delete/' + designationId
+      'http://localhost:8080/employee/designation/' + designationId
     );
   }
 
@@ -56,8 +55,12 @@ export class DesignationService {
     return this.http.get<{
       content: Array<Designation>;
       totalElements: number;
-    }>('http://localhost:8080/designation/search', {
+    }>('http://localhost:8080/employee/designation/search', {
       params: params,
     });
+  }
+
+  notify(message: string) {
+    this.toastrService.success(message, 'Designation Master');
   }
 }

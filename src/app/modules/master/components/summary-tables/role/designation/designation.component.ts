@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Designation } from 'src/app/modules/master/models/designation.model';
 import { ColumnsMetadata } from 'src/app/modules/master/models/columnMetaData';
 import { DesignationService } from 'src/app/modules/master/services/designation.service';
 import { Data, Router } from '@angular/router';
 import { ApiResponse } from 'src/app/modules/master/models/response';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupContentComponent } from '../../../popup-content/popup-content.component';
+import { HttpParams } from '@angular/common/http';
+import { PopupComponent } from '../../../helper/popup/popup.component';
 
 @Component({
   selector: 'app-designation',
@@ -13,16 +14,17 @@ import { PopupContentComponent } from '../../../popup-content/popup-content.comp
   styleUrls: ['./designation.component.scss'],
 })
 export class DesignationComponent {
-  designationList!: Array<Designation>;
+  @Output() sendDataEvnt = new EventEmitter<number>();
 
+  designationMetaData: { content: Array<Designation>; totalElements: number } =
+    {
+      content: [],
+      totalElements: 0,
+    };
   designationHeaders: { columnsMetadata: Array<ColumnsMetadata> } = {
     columnsMetadata: [],
   };
 
-  data: { event: string; data: {} } = {
-    event: '',
-    data: Array<Designation>,
-  };
   constructor(
     private designationService: DesignationService,
     private router: Router,
@@ -30,20 +32,11 @@ export class DesignationComponent {
   ) {}
 
   ngOnInit(): void {
-    this.getData();
     this.getHeaders();
-  }
-
-  getData() {
-    this.designationService.getDesignations().subscribe(
-      (response: Array<Designation>) => {
-        console.log('GET-DESIGNATION Request successful', response);
-        this.designationList = response;
-      },
-      (error: any) => {
-        console.error('GET Request failed', error);
-      }
-    );
+    let params = new HttpParams();
+    params = params.set('page', 0);
+    params = params.set('size', 10);
+    this.searchFunction(params);
   }
 
   getHeaders() {
@@ -61,29 +54,32 @@ export class DesignationComponent {
 
   action(event: Data) {
     let type: string = event['event'];
+    let id: string = event['data'].roleId;
+
+    const queryParam = { id: id };
+
     switch (type) {
       case 'delete':
         this.designationService
-          .deleteDesignation(event['data'].designationId)
+          .deleteDesignation(event['data'].roleId)
           .subscribe(
             (response: ApiResponse) => {
               console.log('DELETE-ROLE Request successful', response);
               this.openPopup('Role deleted successfully!!');
               this.router.navigate(['/master/role']);
+              this.designationService.notify('Role Deleted successfully..!');
             },
             (error: any) => {
               console.error('DELETE-ROLE Request failed', error);
             }
           );
-
         break;
+
       case 'add':
         this.router.navigate(['/master/designationForm']);
         break;
 
       case 'edit':
-        let id: string = event['data'].designationId;
-        const queryParam = { id: id };
         this.router.navigate(['/master/designationForm'], {
           queryParams: queryParam,
         });
@@ -92,10 +88,22 @@ export class DesignationComponent {
   }
 
   openPopup(message: string) {
-    this.dialog.open(PopupContentComponent, {
+    this.dialog.open(PopupComponent, {
       width: '600px',
       height: '200px',
       data: { message: message },
     });
+  }
+
+  searchFunction(event: HttpParams) {
+    this.designationService
+      .search(event)
+      .subscribe(
+        (data: { content: Array<Designation>; totalElements: number }) => {
+          console.log(data.content);
+          console.log(data.totalElements);
+          this.designationMetaData = data;
+        }
+      );
   }
 }

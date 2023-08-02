@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '../core/components/layout/layout.component';
-import { RoleComponent } from './components/summary-tables/role/role/role.component';
+import { RoleComponent } from './components/summary-tables/role/role/role.table.component';
 import { DesignationComponent } from './components/summary-tables/role/designation/designation.component';
 import { RoleFormComponent } from './components/forms/role-form/role.form.component';
 import { GradeComponent } from './components/summary-tables/role/grade/grade.component';
-import { DesignationFormComponent } from './components/forms/designation/designation.form.component';
+import { DesignationFormComponent } from './components/forms/designation-form/designation.form.component';
 
 const routes: Routes = [
   {

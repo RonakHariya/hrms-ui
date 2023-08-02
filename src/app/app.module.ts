@@ -1,5 +1,5 @@
 import { DemoComponent } from './modules/main/components/demo/demo.component';
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,10 +12,16 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ToastrModule } from 'ngx-toastr';
+import { config } from 'rxjs';
+import { PopupComponent } from './modules/master/components/helper/popup/popup.component';
+
+export const CONFIG = new InjectionToken<typeof config>('CONFIG');
 @NgModule({
   declarations: [AppComponent, DemoComponent],
-  providers: [],
+  providers: [{ provide: CONFIG, useValue: config }],
   bootstrap: [AppComponent],
+  entryComponents: [PopupComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,6 +35,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatDialogModule,
     FormsModule,
+
+    ToastrModule.forRoot(),
   ],
+  exports: [MatDialogModule],
 })
 export class AppModule {}

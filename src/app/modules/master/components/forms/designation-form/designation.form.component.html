@@ -1,0 +1,166 @@
+<form [formGroup]="designationForm">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <h2 class="card-title">DESIGNATION INFO</h2>
+          <div class="row mm">
+            <div class="col-lg-6">
+              <mat-label class="dd">Designation Id</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="DES-001"
+                    formControlName="designationId"
+                    class=""
+                    pattern="^[a-zA-Z]+[-][a-zA-Z0-9]+$"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="
+                      designationIdControl?.invalid &&
+                      designationIdControl?.touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="designationIdControl?.errors?.['required']"
+                    >
+                      Please Enter Valid Designation Id
+                    </ng-container>
+                    <ng-container
+                      *ngIf="designationIdControl?.errors?.['pattern']"
+                    >
+                      Invalid Designation pattern. Please use the format
+                      'DES-001'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <mat-label class="dd">Designation Name</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="MANAGER"
+                    class=""
+                    formControlName="designationName"
+                    [disabled]="
+                      designationForm.get('designationId')?.value === null ||
+                      designationForm.get('designationId')?.value === ''
+                    "
+                    pattern="^[a-zA-Z ]*$"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="
+                      designationNameControl?.invalid &&
+                      designationNameControl?.touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="designationNameControl?.errors?.['required']"
+                    >
+                      Please Enter Valid Designation Name
+                    </ng-container>
+                    <ng-container
+                      *ngIf="designationNameControl?.errors?.['pattern']"
+                    >
+                      Invalid Designation Name pattern. Please use the format
+                      'Account'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <mat-label class="dd">Designation Description</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="description"
+                    class=""
+                    formControlName="designationDesc"
+                    [disabled]="
+                      designationForm.get('designationId')?.value === null ||
+                      designationForm.get('designationId')?.value === '' ||
+                      designationForm.get('designationName')?.value === null ||
+                      designationForm.get('designationName')?.value === ''
+                    "
+                    pattern="^[a-zA-Z ]*$"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="
+                      designationNameControl?.invalid &&
+                      designationNameControl?.touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="designationNameControl?.errors?.['required']"
+                    >
+                      Please Enter Valid Designation Name
+                    </ng-container>
+                    <ng-container
+                      *ngIf="designationNameControl?.errors?.['pattern']"
+                    >
+                      Invalid Designation Name pattern. Please use the format
+                      'Account'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <mat-label class="dd">Organization Code</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="IND12"
+                    class=""
+                    formControlName="orgCode"
+                    [disabled]="
+                      designationForm.get('designationId')?.value === null ||
+                      designationForm.get('designationId')?.value === '' ||
+                      designationForm.get('designationName')?.value === null ||
+                      designationForm.get('designationName')?.value === '' ||
+                      designationForm.get('designationDesc')?.value === null ||
+                      designationForm.get('designationDesc')?.value === ''
+                    "
+                    pattern="[^0-9][a-zA-Z0-9]*"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="orgControl?.invalid && orgControl?.touched"
+                  >
+                    <ng-container *ngIf="orgControl?.errors?.['required']">
+                      Please Enter Valid Org Code
+                    </ng-container>
+                    <ng-container *ngIf="orgControl?.errors?.['pattern']">
+                      Invalid Org Code pattern. Please use the format
+                      'bazinga123'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div _ngcontent-ng-c812429062="" class="form-footer">
+            <button
+              _ngcontent-ng-c812429062=""
+              class="profile-save-btn"
+              (click)="onSumbit()"
+            >
+              {{ actionLabel }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

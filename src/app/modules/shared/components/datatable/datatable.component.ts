@@ -8,9 +8,9 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { debounceTime } from 'rxjs/operators';
 import { ColumnsMetadata } from 'src/app/modules/master/models/columnMetaData';
 import { Pagination } from 'src/app/modules/master/models/pageable';
+import { RoleService } from 'src/app/modules/master/services/role.service';
 
 @Component({
   selector: 'app-datatable',
@@ -29,7 +29,7 @@ export class DatatableComponent implements OnInit, OnChanges {
   key: string = 'id';
   reverse: boolean = false;
   pagination: Pagination = { pageSize: 10, pageNumber: 0 };
-  constructor() {}
+  constructor(private roleService: RoleService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setPagination();
@@ -55,7 +55,6 @@ export class DatatableComponent implements OnInit, OnChanges {
   }
 
   searchFunction() {
-    console.log('ready to emit');
     this.pagination.serchingParmeter = this.searchTerm;
     this.setHttpParams();
   }
@@ -66,6 +65,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   buttonEvent(event: string) {
     let data = { event: event, data: {} };
+
     switch (event) {
       case 'add':
         return this.buttonFunction.emit(data);
@@ -132,5 +132,23 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   changePageSize() {
     this.setHttpParams();
+  }
+
+  nextPage(page: number) {
+    this.pagination.pageNumber = page + 1;
+    this.setHttpParams();
+  }
+
+  prevPage(page: number) {
+    if (page != 0) {
+      console.log('Page>> ' + page);
+      this.pagination.pageNumber = page - 1;
+      this.setHttpParams();
+    } else {
+      console.log('Page>> ' + page);
+
+      this.pagination.pageNumber = page;
+      this.setHttpParams();
+    }
   }
 }

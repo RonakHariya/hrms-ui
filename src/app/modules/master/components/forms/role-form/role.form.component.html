@@ -1,4 +1,4 @@
-<form [formGroup]="roleForm" (click)="onSumbit()">
+<form [formGroup]="roleForm">
   <div class="page-title">
     <div class="row">
       <div class="col-lg-8">
@@ -11,7 +11,7 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="Role ID - AVI-001"
+                    placeholder="AVI-001"
                     formControlName="roleId"
                     class=""
                     pattern="^[a-zA-Z]+[-][a-zA-Z0-9]+$"
@@ -36,7 +36,7 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="Role Name - HR"
+                    placeholder="HR"
                     class=""
                     formControlName="roleName"
                     [disabled]="
@@ -65,7 +65,7 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="Org Code"
+                    placeholder="IND12"
                     class=""
                     formControlName="orgCode"
                     [disabled]="
@@ -94,7 +94,11 @@
           </div>
 
           <div _ngcontent-ng-c812429062="" class="form-footer">
-            <button _ngcontent-ng-c812429062="" class="profile-save-btn">
+            <button
+              _ngcontent-ng-c812429062=""
+              class="profile-save-btn"
+              (click)="onSumbit()"
+            >
               {{ actionLabel }}
             </button>
           </div>

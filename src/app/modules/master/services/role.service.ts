@@ -1,13 +1,17 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Role } from '../models/role.model';
 import { ColumnsMetadata } from '../models/columnMetaData';
 import { ApiResponse } from '../models/response';
+import { ToastrService } from 'ngx-toastr';
+import { Data } from '@angular/router';
 
 @Injectable()
 export class RoleService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastrService: ToastrService) {}
+  private dataSubject = new BehaviorSubject<string>('');
+  public data$ = this.dataSubject.asObservable();
 
   ngOnInit(): void {}
 
@@ -61,5 +65,14 @@ export class RoleService {
         params: params,
       }
     );
+  }
+
+  notify(message: string) {
+    this.toastrService.success(message, 'Role Master');
+  }
+
+  sendData(data: string) {
+    console.log(data);
+    this.dataSubject.next(data);
   }
 }

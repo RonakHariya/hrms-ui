@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MasterRoutingModule } from './master-routing.module';
-import { RoleComponent } from './components/summary-tables/role/role/role.component';
+import { RoleComponent } from './components/summary-tables/role/role/role.table.component';
 import { DesignationComponent } from './components/summary-tables/role/designation/designation.component';
 import { SharedModule } from '../shared/shared.module';
 import { GradeComponent } from './components/summary-tables/role/grade/grade.component';
@@ -16,9 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleService } from './services/role.service';
 import { DesignationService } from './services/designation.service';
 import { GradeService } from './services/grade.service';
-import { PopupContentComponent } from './components/popup-content/popup-content.component';
-import { DesignationFormComponent } from './components/forms/designation/designation.form.component';
-
+import { DesignationFormComponent } from './components/forms/designation-form/designation.form.component';
+import { ToastrModule } from 'ngx-toastr';
+import { PopupComponent } from './components/helper/popup/popup.component';
 @NgModule({
   declarations: [
     RoleComponent,
@@ -28,9 +28,11 @@ import { DesignationFormComponent } from './components/forms/designation/designa
     DepartmentComponent,
     EmployeeTypeComponent,
     RoleFormComponent,
-    PopupContentComponent,
+
     DesignationFormComponent,
+    PopupComponent,
   ],
+  entryComponents: [PopupComponent],
   imports: [
     CommonModule,
     MasterRoutingModule,
@@ -41,6 +43,7 @@ import { DesignationFormComponent } from './components/forms/designation/designa
     MatSelectModule,
     ReactiveFormsModule,
     FormsModule,
+    ToastrModule,
   ],
   providers: [RoleService, DesignationService, GradeService],
 })
