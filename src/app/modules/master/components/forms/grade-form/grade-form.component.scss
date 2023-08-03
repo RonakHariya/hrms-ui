@@ -1,3 +1,11 @@
+.select-tag {
+  width: 88%;
+}
+
+.profile-save-btn {
+  display: block;
+  margin: 0 auto;
+}
 .card {
   // margin-bottom: 30px;
   border: none;
@@ -5,10 +13,6 @@
   letter-spacing: 0.5px;
   border-radius: 20px;
   box-shadow: 0 0 20px #0815420d;
-}
-.profile-save-btn {
-  display: block;
-  margin: 0 auto;
 }
 .card .card-header {
   border-bottom: none;

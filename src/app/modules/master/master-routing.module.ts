@@ -6,6 +6,7 @@ import { DesignationComponent } from './components/summary-tables/role/designati
 import { RoleFormComponent } from './components/forms/role-form/role.form.component';
 import { GradeComponent } from './components/summary-tables/role/grade/grade.component';
 import { DesignationFormComponent } from './components/forms/designation-form/designation.form.component';
+import { GradeFormComponent } from './components/forms/grade-form/grade-form.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,11 @@ const routes: Routes = [
     children: [
       { path: 'designationForm', component: DesignationFormComponent },
     ],
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [{ path: 'gradeForm', component: GradeFormComponent }],
   },
 ];
 

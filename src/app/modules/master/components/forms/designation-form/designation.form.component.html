@@ -51,7 +51,7 @@
                       designationForm.get('designationId')?.value === null ||
                       designationForm.get('designationId')?.value === ''
                     "
-                    pattern="^[a-zA-Z ]*$"
+                    pattern="^(?!.*\s)[A-Za-z][-_A-Za-z0-9]{0,98}[A-Za-z0-9]$"
                   />
                   <small
                     class="text-danger"
@@ -90,7 +90,7 @@
                       designationForm.get('designationName')?.value === null ||
                       designationForm.get('designationName')?.value === ''
                     "
-                    pattern="^[a-zA-Z ]*$"
+                    pattern="^(?!.*[^A-Za-z0-9\s]).{1,250}$"
                   />
                   <small
                     class="text-danger"
@@ -131,7 +131,7 @@
                       designationForm.get('designationDesc')?.value === null ||
                       designationForm.get('designationDesc')?.value === ''
                     "
-                    pattern="[^0-9][a-zA-Z0-9]*"
+                    pattern="^[A-Za-z][-_A-Za-z]{0,8}[A-Za-z]$"
                   />
                   <small
                     class="text-danger"

@@ -19,6 +19,7 @@ import { GradeService } from './services/grade.service';
 import { DesignationFormComponent } from './components/forms/designation-form/designation.form.component';
 import { ToastrModule } from 'ngx-toastr';
 import { PopupComponent } from './components/helper/popup/popup.component';
+import { GradeFormComponent } from './components/forms/grade-form/grade-form.component';
 @NgModule({
   declarations: [
     RoleComponent,
@@ -31,6 +32,7 @@ import { PopupComponent } from './components/helper/popup/popup.component';
 
     DesignationFormComponent,
     PopupComponent,
+    GradeFormComponent,
   ],
   entryComponents: [PopupComponent],
   imports: [

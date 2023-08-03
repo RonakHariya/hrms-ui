@@ -1,0 +1,137 @@
+<form [formGroup]="gradeForm">
+  <div class="page-title">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <h2 class="card-title">GRADE INFO</h2>
+          <div class="row mm">
+            <div class="col-lg-6">
+              <mat-label class="dd">Grade Id</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="GR-001"
+                    formControlName="gradeId"
+                    class=""
+                    pattern="^(?!.*\s)[A-Za-z0-9]{1,50}$"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="gradeIdControl?.invalid && gradeIdControl?.touched"
+                  >
+                    <ng-container *ngIf="gradeIdControl?.errors?.['required']">
+                      Please Enter Valid Designation Id
+                    </ng-container>
+                    <ng-container *ngIf="gradeIdControl?.errors?.['pattern']">
+                      Invalid Designation pattern. Please use the format
+                      'DES-001'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <mat-label class="dd">Grade Name</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="abc"
+                    class=""
+                    formControlName="gradeName"
+                    [disabled]="
+                      gradeForm.get('gradeId')?.value === null ||
+                      gradeForm.get('gradeId')?.value === ''
+                    "
+                    pattern="^(?!.*\s)[A-Za-z][-_A-Za-z0-9]{0,98}[A-Za-z0-9]$"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="
+                      gradeNameControl?.invalid && gradeNameControl?.touched
+                    "
+                  >
+                    <ng-container
+                      *ngIf="gradeNameControl?.errors?.['required']"
+                    >
+                      Please Enter Valid Grade Name
+                    </ng-container>
+                    <ng-container *ngIf="gradeNameControl?.errors?.['pattern']">
+                      Invalid Grade Name pattern. Please use the format
+                      'Account'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <mat-label class="dd">Grade Type</mat-label>
+              <div class="">
+                <select
+                  id="selectGrade"
+                  formControlName="gradeType"
+                  class="select-tag"
+                >
+                  <option value="">Please select Grade</option>
+                  <option value="grade1">GRADE1</option>
+                  <option value="grade2">GRADE2</option>
+                  <option value="grade3">GRADE3</option>
+                </select>
+                <small class="text-danger" *ngIf="gradeTypeControl?.touched">
+                  <ng-container *ngIf="orgControl?.errors?.['required']">
+                    Please select a grade
+                  </ng-container>
+                </small>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <mat-label class="dd">Organization Code</mat-label>
+              <div class="">
+                <mat-form-field appearance="outline" color="primary">
+                  <input
+                    matInput
+                    placeholder="IND12"
+                    class=""
+                    formControlName="orgCode"
+                    [disabled]="
+                      gradeForm.get('gradeId')?.value === null ||
+                      gradeForm.get('gradeId')?.value === '' ||
+                      gradeForm.get('gradeName')?.value === null ||
+                      gradeForm.get('gradeName')?.value === ''
+                    "
+                    pattern="^[A-Za-z][-_A-Za-z]{0,8}[A-Za-z]$"
+                  />
+                  <small
+                    class="text-danger"
+                    *ngIf="orgControl?.invalid && orgControl?.touched"
+                  >
+                    <ng-container *ngIf="orgControl?.errors?.['required']">
+                      Please Enter Valid Org Code
+                    </ng-container>
+                    <ng-container *ngIf="orgControl?.errors?.['pattern']">
+                      Invalid Org Code pattern. Please use the format
+                      'bazinga123'
+                    </ng-container>
+                  </small>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div _ngcontent-ng-c812429062="" class="form-footer">
+            <button
+              _ngcontent-ng-c812429062=""
+              class="profile-save-btn"
+              (click)="onSumbit()"
+            >
+              {{ actionLabel }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

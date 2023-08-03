@@ -58,6 +58,7 @@ export class DatatableComponent implements OnInit, OnChanges {
     this.pagination.serchingParmeter = this.searchTerm;
     this.setHttpParams();
   }
+
   radioButtonEvent(rowData: Object) {
     this.selectedValue = rowData;
     console.log(this.selectedValue.valueOf());

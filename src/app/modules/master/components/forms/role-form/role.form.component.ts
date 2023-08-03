@@ -92,6 +92,9 @@ export class RoleFormComponent {
             this.roleService.notify('Role Added successfully..!');
           },
           (error: any) => {
+            if (error.status == 400) {
+              this.roleService.warn('Credentials already present');
+            }
             console.error('POST Request failed', error);
           }
         );

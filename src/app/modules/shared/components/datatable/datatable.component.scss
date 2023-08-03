@@ -1,3 +1,7 @@
+.noText {
+  opacity: 0.5;
+}
+
 .action-btn {
   border: none;
   border-color: white;
@@ -26,6 +30,7 @@
   background-color: #fff;
   border-radius: 10px;
   border: 1px solid #fff;
+  height: 100%;
 }
 th {
   text-align: left;
@@ -160,4 +165,7 @@ select {
 }
 .form-check {
   margin-bottom: 0px;
+}
+.container1 {
+  height: 100%;
 }

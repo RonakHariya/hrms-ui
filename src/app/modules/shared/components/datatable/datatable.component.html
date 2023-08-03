@@ -21,7 +21,6 @@
                 class="form-control form-control-solid search"
                 placeholder="search here"
               />
-              <!-- <button (click)="searchFunction()">Search</button> -->
             </div>
             <div class="cardtoolbar d-flex">
               <div class="d-flex">
@@ -108,14 +107,7 @@
                     </div>
                   </td>
                 </div>
-                <div *ngIf="column.type === 'select'">
-                  <select name="option" id="select" class="select-tag">
-                    <option value="">Select Grade Type</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                </div>
+
                 <div *ngIf="column.type !== 'radio'">
                   {{ getValue(row, column.mappedBy) }}
                 </div>
@@ -127,13 +119,14 @@
       <div class="d-flex justify-content-end mt-2">
         <ul class="pagination">
           <li
-            *ngFor="let page of paginationList"
+            *ngFor="let page of paginationList; first as asFirst"
             class="navigation-btn"
             class="paginate_button page-item"
             id="kt_table_users_previous"
           >
             <a
               aria-controls="kt_table_users"
+              *ngIf="asFirst"
               data-dt-idx="0"
               tabindex="0"
               class="page-link"
@@ -157,12 +150,13 @@
           </li>
 
           <li
-            *ngFor="let page of paginationList"
+            *ngFor="let page of paginationList; first as asLast"
             class="paginate_button page-item next"
             id="kt_table_users_next"
           >
             <a
               aria-controls="kt_table_users"
+              *ngIf="asLast"
               data-dt-idx="4"
               tabindex="0"
               class="page-link"

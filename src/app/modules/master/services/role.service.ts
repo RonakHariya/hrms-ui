@@ -71,6 +71,10 @@ export class RoleService {
     this.toastrService.success(message, 'Role Master');
   }
 
+  warn(message: string) {
+    this.toastrService.warning(message);
+  }
+
   sendData(data: string) {
     console.log(data);
     this.dataSubject.next(data);

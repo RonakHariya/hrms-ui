@@ -39,6 +39,7 @@ export class DesignationFormComponent {
         //this.roleService.notify('Please select Id for the selected operation');
       }
       if (this.queryParams['id'] != undefined) {
+        console.log(this.queryParams['id']);
         this.actionLabel = 'Update';
         this.getById(this.queryParams['id']);
       } else {
@@ -119,6 +120,9 @@ export class DesignationFormComponent {
             this.designationService.notify('Designation Added successfully..!');
           },
           (error: any) => {
+            if (error.status == 400) {
+              this.designationService.warn('Credentials already present');
+            }
             console.error('POST Request failed', error);
           }
         );
@@ -139,6 +143,7 @@ export class DesignationFormComponent {
   }
 
   getById(id: string) {
+    console.log('get by id');
     this.designationService
       .searchDesignationById(id)
       .subscribe((response: Designation) => {

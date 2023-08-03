@@ -63,4 +63,8 @@ export class DesignationService {
   notify(message: string) {
     this.toastrService.success(message, 'Designation Master');
   }
+
+  warn(message: string) {
+    this.toastrService.warning(message);
+  }
 }

@@ -54,23 +54,24 @@ export class DesignationComponent {
 
   action(event: Data) {
     let type: string = event['event'];
-    let id: string = event['data'].roleId;
+    let id: string = event['data'].designationId;
 
     const queryParam = { id: id };
-
     switch (type) {
       case 'delete':
         this.designationService
-          .deleteDesignation(event['data'].roleId)
+          .deleteDesignation(event['data'].designationId)
           .subscribe(
             (response: ApiResponse) => {
               console.log('DELETE-ROLE Request successful', response);
-              this.openPopup('Role deleted successfully!!');
-              this.router.navigate(['/master/role']);
-              this.designationService.notify('Role Deleted successfully..!');
+              this.openPopup('Designation deleted successfully!!');
+              this.router.navigate(['/master/designation']);
+              this.designationService.notify(
+                'Designation Deleted successfully..!'
+              );
             },
             (error: any) => {
-              console.error('DELETE-ROLE Request failed', error);
+              console.error('DELETE-DESIGNATION Request failed', error);
             }
           );
         break;
@@ -83,6 +84,7 @@ export class DesignationComponent {
         this.router.navigate(['/master/designationForm'], {
           queryParams: queryParam,
         });
+        console.log(queryParam);
         break;
     }
   }
@@ -96,6 +98,7 @@ export class DesignationComponent {
   }
 
   searchFunction(event: HttpParams) {
+    console.log('hi search ');
     this.designationService
       .search(event)
       .subscribe(
