@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { RoleService } from '../../../services/role.service';
 import { Role } from '../../../models/role.model';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
@@ -24,7 +23,6 @@ export class RoleFormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private roleService: RoleService,
-    private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -48,26 +46,9 @@ export class RoleFormComponent {
     this.roleForm = this.formBuilder.group({
       id: [''],
       roleId: ['', Validators.required],
-      roleName: [{ value: '', disabled: true }, Validators.required],
-      orgCode: [{ value: '', disabled: true }, Validators.required],
+      roleName: ['', Validators.required],
+      orgCode: ['', Validators.required],
       createdBy: ['Admin'],
-    });
-
-    this.roleForm.get('roleId')?.valueChanges.subscribe((value) => {
-      if (value !== null && value !== '') {
-        this.roleForm.get('roleName')?.enable();
-      } else {
-        this.roleForm.get('roleName')?.disable();
-        this.roleForm.get('orgCode')?.disable();
-      }
-    });
-
-    this.roleForm.get('roleName')?.valueChanges.subscribe((value) => {
-      if (value !== null && value !== '') {
-        this.roleForm.get('orgCode')?.enable();
-      } else {
-        this.roleForm.get('orgCode')?.disable();
-      }
     });
   }
 
@@ -107,6 +88,9 @@ export class RoleFormComponent {
             this.router.navigate(['/master/role']);
           },
           (error: any) => {
+            if (error.status == 400) {
+              this.roleService.warn('Credentials already present');
+            }
             console.error('PUT Request failed', error);
           }
         );

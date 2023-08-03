@@ -87,13 +87,14 @@ export class RoleComponent {
           (response: ApiResponse) => {
             console.log('DELETE-ROLE Request successful', response);
             this.openPopup('Role deleted successfully!!');
-            this.router.navigate(['/master/role']);
+
             this.roleService.notify('Role Deleted successfully..!');
           },
           (error: any) => {
             console.error('DELETE-ROLE Request failed', error);
           }
         );
+
         break;
 
       case 'add':
@@ -101,6 +102,8 @@ export class RoleComponent {
         break;
 
       case 'edit':
+        if (event['data'].roleId == undefined)
+          this.roleService.warn('Please select Id for the operation');
         this.router.navigate(['/master/roleForm'], { queryParams: queryParam });
         break;
     }

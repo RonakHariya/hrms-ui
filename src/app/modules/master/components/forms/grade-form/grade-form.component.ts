@@ -46,26 +46,9 @@ export class GradeFormComponent {
     this.gradeForm = this.formBuilder.group({
       id: [''],
       gradeId: ['', Validators.required],
-      gradeName: [{ value: '', disabled: true }, Validators.required],
+      gradeName: ['', Validators.required],
       gradeType: [''],
-      orgCode: [{ value: '' }, Validators.required],
-    });
-
-    this.gradeForm.get('gradeId')?.valueChanges.subscribe((value) => {
-      if (value !== null && value !== '') {
-        this.gradeForm.get('gradeName')?.enable();
-      } else {
-        this.gradeForm.get('gradeName')?.disable();
-        //this.gradeForm.get('orgCode')?.disable();
-      }
-    });
-
-    this.gradeForm.get('gradeName')?.valueChanges.subscribe((value) => {
-      if (value !== null && value !== '') {
-        this.gradeForm.get('gradeName')?.enable();
-      } else {
-        // this.gradeForm.get('orgCode')?.disable();
-      }
+      orgCode: ['', Validators.required],
     });
   }
 
@@ -108,6 +91,9 @@ export class GradeFormComponent {
             this.router.navigate(['/master/grade']);
           },
           (error: any) => {
+            if (error.status == 400) {
+              this.gradeService.warn('Credentials already present');
+            }
             console.error('PUT Request failed', error);
           }
         );

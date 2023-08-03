@@ -35,9 +35,7 @@ export class DesignationFormComponent {
 
     this.route.queryParams.subscribe((params) => {
       this.queryParams = params;
-      if (this.queryParams['id'] == undefined) {
-        //this.roleService.notify('Please select Id for the selected operation');
-      }
+
       if (this.queryParams['id'] != undefined) {
         console.log(this.queryParams['id']);
         this.actionLabel = 'Update';
@@ -52,48 +50,15 @@ export class DesignationFormComponent {
     this.designationForm = this.formBuilder.group({
       id: [''],
       designationId: ['', Validators.required],
-      designationName: [{ value: '', disabled: true }, Validators.required],
-      designationDesc: [{ value: '', disabled: true }, Validators.required],
-      orgCode: [{ value: '', disabled: true }, Validators.required],
+      designationName: ['', Validators.required],
+      designationDesc: ['', Validators.required],
+      orgCode: ['', Validators.required],
       createdBy: ['Admin'],
       createdAt: [''],
       updatedBy: [''],
       updatedAt: [''],
       isDeleted: [false],
     });
-
-    this.designationForm
-      .get('designationId')
-      ?.valueChanges.subscribe((value) => {
-        if (value !== null && value !== '') {
-          this.designationForm.get('designationName')?.enable();
-        } else {
-          this.designationForm.get('designationName')?.disable();
-          this.designationForm.get('designationDesc')?.disable();
-          this.designationForm.get('orgCode')?.disable();
-        }
-      });
-
-    this.designationForm
-      .get('designationName')
-      ?.valueChanges.subscribe((value) => {
-        if (value !== null && value !== '') {
-          this.designationForm.get('designationDesc')?.enable();
-        } else {
-          this.designationForm.get('designationDesc')?.disable();
-          this.designationForm.get('orgCode')?.disable();
-        }
-      });
-
-    this.designationForm
-      .get('designationDesc')
-      ?.valueChanges.subscribe((value) => {
-        if (value !== null && value !== '') {
-          this.designationForm.get('orgCode')?.enable();
-        } else {
-          this.designationForm.get('orgCode')?.disable();
-        }
-      });
   }
 
   get designationIdControl() {
@@ -135,6 +100,9 @@ export class DesignationFormComponent {
             this.router.navigate(['/master/designation']);
           },
           (error: any) => {
+            if (error.status == 400) {
+              this.designationService.warn('Credentials already present');
+            }
             console.error('PUT Request failed', error);
           }
         );

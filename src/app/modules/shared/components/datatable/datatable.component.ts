@@ -73,6 +73,7 @@ export class DatatableComponent implements OnInit, OnChanges {
         break;
       case 'edit':
         data.data = this.selectedValue;
+
         return this.buttonFunction.emit(data);
         break;
       case 'delete':

@@ -11,10 +11,10 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="DES-001"
+                    placeholder="DES001"
                     formControlName="designationId"
                     class=""
-                    pattern="^[a-zA-Z]+[-][a-zA-Z0-9]+$"
+                    pattern="^(?!.*\s)[A-Za-z0-9]{1,50}$"
                   />
                   <small
                     class="text-danger"
@@ -44,7 +44,7 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="MANAGER"
+                    placeholder="Senior-Manager"
                     class=""
                     formControlName="designationName"
                     [disabled]="
@@ -81,7 +81,7 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="description"
+                    placeholder="Sample Description"
                     class=""
                     formControlName="designationDesc"
                     [disabled]="
@@ -120,7 +120,7 @@
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
-                    placeholder="IND12"
+                    placeholder="IND_KOL"
                     class=""
                     formControlName="orgCode"
                     [disabled]="
