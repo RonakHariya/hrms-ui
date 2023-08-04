@@ -6,35 +6,57 @@
           <h2 class="card-title">DESIGNATION INFO</h2>
           <div class="row mm">
             <div class="col-lg-6">
-              <mat-label class="dd">Designation Id</mat-label>
+              <mat-label class="dd">Designation Id </mat-label>
               <div class="">
                 <mat-form-field appearance="outline" color="primary">
                   <input
                     matInput
                     placeholder="DES001"
                     formControlName="designationId"
-                    class=""
-                    pattern="^(?!.*\s)[A-Za-z0-9]{1,50}$"
                   />
-                  <small
-                    class="text-danger"
+                  <div
                     *ngIf="
-                      designationIdControl?.invalid &&
-                      designationIdControl?.touched
+                      designationForm.controls['designationId']?.invalid &&
+                      designationForm.controls['designationId']?.touched &&
+                      designationForm.controls['designationId']?.errors
                     "
                   >
-                    <ng-container
-                      *ngIf="designationIdControl?.errors?.['required']"
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationId']?.errors?.['required']"
+                      >Please enter Designation Id</span
                     >
-                      Please Enter Valid Designation Id
-                    </ng-container>
-                    <ng-container
-                      *ngIf="designationIdControl?.errors?.['pattern']"
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationId'].errors?.['pattern']"
+                      >Please enter valid Designation Id
+                    </span>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationId']?.errors?.['leadingSpace'] && !designationForm.controls['designationId'].errors?.['pattern'] && !designationForm.controls['designationId']?.errors?.['trailingSpace']"
+                      >Leading space not allowed.</span
                     >
-                      Invalid Designation pattern. Please use the format
-                      'DES-001'
-                    </ng-container>
-                  </small>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationId']?.errors?.['whitespace']"
+                      >Field can not be empty.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationId']?.errors?.['trailingSpace'] && !designationForm.controls['designationId'].errors?.['pattern'] && !designationForm.controls['designationId']?.errors?.['leadingSpace']"
+                      >Trailing space not allowed.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationId']?.errors?.['trailingSpace'] && !designationForm.controls['designationId'].errors?.['pattern'] && designationForm.controls['designationId']?.errors?.['leadingSpace']"
+                      >Trailing,Leading spaces not allowed.</span
+                    >
+                  </div>
                 </mat-form-field>
               </div>
             </div>
@@ -45,33 +67,51 @@
                   <input
                     matInput
                     placeholder="Senior-Manager"
-                    class=""
                     formControlName="designationName"
-                    [disabled]="
-                      designationForm.get('designationId')?.value === null ||
-                      designationForm.get('designationId')?.value === ''
-                    "
-                    pattern="^(?!.*\s)[A-Za-z][-_A-Za-z0-9]{0,98}[A-Za-z0-9]$"
                   />
-                  <small
-                    class="text-danger"
+                  <div
                     *ngIf="
-                      designationNameControl?.invalid &&
-                      designationNameControl?.touched
+                      designationForm.controls['designationName']?.invalid &&
+                      designationForm.controls['designationName']?.touched &&
+                      designationForm.controls['designationName']?.errors
                     "
                   >
-                    <ng-container
-                      *ngIf="designationNameControl?.errors?.['required']"
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationName']?.errors?.['required']"
+                      >Please enter Designation Name</span
                     >
-                      Please Enter Valid Designation Name
-                    </ng-container>
-                    <ng-container
-                      *ngIf="designationNameControl?.errors?.['pattern']"
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationName'].errors?.['pattern']"
+                      >Please enter valid Designation Name
+                    </span>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationName']?.errors?.['leadingSpace'] && !designationForm.controls['designationName'].errors?.['pattern'] && !designationForm.controls['designationName']?.errors?.['trailingSpace']"
+                      >Leading space not allowed.</span
                     >
-                      Invalid Designation Name pattern. Please use the format
-                      'Account'
-                    </ng-container>
-                  </small>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationName']?.errors?.['whitespace']"
+                      >Field can not be empty.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationName']?.errors?.['trailingSpace'] && !designationForm.controls['designationName'].errors?.['pattern'] && !designationForm.controls['designationName']?.errors?.['leadingSpace']"
+                      >Trailing space not allowed.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationName']?.errors?.['trailingSpace'] && !designationForm.controls['designationName'].errors?.['pattern'] && designationForm.controls['designationName']?.errors?.['leadingSpace']"
+                      >Trailing,Leading spaces not allowed.</span
+                    >
+                  </div>
                 </mat-form-field>
               </div>
             </div>
@@ -82,35 +122,51 @@
                   <input
                     matInput
                     placeholder="Sample Description"
-                    class=""
                     formControlName="designationDesc"
-                    [disabled]="
-                      designationForm.get('designationId')?.value === null ||
-                      designationForm.get('designationId')?.value === '' ||
-                      designationForm.get('designationName')?.value === null ||
-                      designationForm.get('designationName')?.value === ''
-                    "
-                    pattern="^(?!.*[^A-Za-z0-9\s]).{1,250}$"
                   />
-                  <small
-                    class="text-danger"
+                  <div
                     *ngIf="
-                      designationNameControl?.invalid &&
-                      designationNameControl?.touched
+                      designationForm.controls['designationDesc']?.invalid &&
+                      designationForm.controls['designationDesc']?.touched &&
+                      designationForm.controls['designationDesc']?.errors
                     "
                   >
-                    <ng-container
-                      *ngIf="designationNameControl?.errors?.['required']"
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationDesc']?.errors?.['required']"
+                      >Please enter Designation Description</span
                     >
-                      Please Enter Valid Designation Name
-                    </ng-container>
-                    <ng-container
-                      *ngIf="designationNameControl?.errors?.['pattern']"
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationDesc'].errors?.['pattern']"
+                      >Please enter valid Designation Description
+                    </span>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationDesc']?.errors?.['leadingSpace'] && !designationForm.controls['designationDesc'].errors?.['pattern'] && !designationForm.controls['designationDesc']?.errors?.['trailingSpace']"
+                      >Leading space not allowed.</span
                     >
-                      Invalid Designation Name pattern. Please use the format
-                      'Account'
-                    </ng-container>
-                  </small>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationDesc']?.errors?.['whitespace']"
+                      >Field can not be empty.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationDesc']?.errors?.['trailingSpace'] && !designationForm.controls['designationDesc'].errors?.['pattern'] && !designationForm.controls['designationDesc']?.errors?.['leadingSpace']"
+                      >Trailing space not allowed.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['designationDesc']?.errors?.['trailingSpace'] && !designationForm.controls['designationDesc'].errors?.['pattern'] && designationForm.controls['designationDesc']?.errors?.['leadingSpace']"
+                      >Trailing,Leading spaces not allowed.</span
+                    >
+                  </div>
                 </mat-form-field>
               </div>
             </div>
@@ -121,30 +177,51 @@
                   <input
                     matInput
                     placeholder="IND_KOL"
-                    class=""
                     formControlName="orgCode"
-                    [disabled]="
-                      designationForm.get('designationId')?.value === null ||
-                      designationForm.get('designationId')?.value === '' ||
-                      designationForm.get('designationName')?.value === null ||
-                      designationForm.get('designationName')?.value === '' ||
-                      designationForm.get('designationDesc')?.value === null ||
-                      designationForm.get('designationDesc')?.value === ''
-                    "
-                    pattern="^[A-Za-z][-_A-Za-z]{0,8}[A-Za-z]$"
                   />
-                  <small
-                    class="text-danger"
-                    *ngIf="orgControl?.invalid && orgControl?.touched"
+                  <div
+                    *ngIf="
+                      designationForm.controls['orgCode']?.invalid &&
+                      designationForm.controls['orgCode']?.touched &&
+                      designationForm.controls['orgCode']?.errors
+                    "
                   >
-                    <ng-container *ngIf="orgControl?.errors?.['required']">
-                      Please Enter Valid Org Code
-                    </ng-container>
-                    <ng-container *ngIf="orgControl?.errors?.['pattern']">
-                      Invalid Org Code pattern. Please use the format
-                      'bazinga123'
-                    </ng-container>
-                  </small>
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['orgCode']?.errors?.['required']"
+                      >Please enter Organization Code</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['orgCode'].errors?.['pattern']"
+                      >Please enter valid Organization Code
+                    </span>
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['orgCode']?.errors?.['leadingSpace'] && !designationForm.controls['orgCode'].errors?.['pattern'] && !designationForm.controls['orgCode']?.errors?.['trailingSpace']"
+                      >Leading space not allowed.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['orgCode']?.errors?.['whitespace']"
+                      >Field can not be empty.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['orgCode']?.errors?.['trailingSpace'] && !designationForm.controls['orgCode'].errors?.['pattern'] && !designationForm.controls['orgCode']?.errors?.['leadingSpace']"
+                      >Trailing space not allowed.</span
+                    >
+
+                    <span
+                      class="validate-text"
+                      *ngIf="designationForm.controls['orgCode']?.errors?.['trailingSpace'] && !designationForm.controls['orgCode'].errors?.['pattern'] && designationForm.controls['orgCode']?.errors?.['leadingSpace']"
+                      >Trailing,Leading spaces not allowed.</span
+                    >
+                  </div>
                 </mat-form-field>
               </div>
             </div>

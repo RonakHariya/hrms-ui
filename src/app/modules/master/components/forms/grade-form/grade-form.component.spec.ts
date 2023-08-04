@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GradeFormComponent } from './grade-form.component';
+import { GradeFormComponent } from './grade.form.component';
 
 describe('GradeFormComponent', () => {
   let component: GradeFormComponent;
@@ -8,9 +8,8 @@ describe('GradeFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GradeFormComponent ]
-    })
-    .compileComponents();
+      declarations: [GradeFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GradeFormComponent);
     component = fixture.componentInstance;

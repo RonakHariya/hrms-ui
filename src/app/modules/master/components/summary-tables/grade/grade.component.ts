@@ -6,7 +6,7 @@ import { ColumnsMetadata } from 'src/app/modules/master/models/columnMetaData';
 import { Grade } from 'src/app/modules/master/models/grade.model';
 import { ApiResponse } from 'src/app/modules/master/models/response';
 import { GradeService } from 'src/app/modules/master/services/grade.service';
-import { PopupComponent } from '../../../helper/popup/popup.component';
+import { PopupComponent } from '../../helper/popup/popup.component';
 
 @Component({
   selector: 'app-grade',
@@ -62,9 +62,11 @@ export class GradeComponent {
         this.gradeService.deleteGrade(event['data'].gradeId).subscribe(
           (response: ApiResponse) => {
             console.log('DELETE-Grade Request successful', response);
-            this.openPopup('Grade deleted successfully!!');
-            this.router.navigate(['/master/grade']);
             this.gradeService.notify('Grade Deleted successfully..!');
+            let params = new HttpParams();
+            params = params.set('page', 0);
+            params = params.set('size', 10);
+            this.searchFunction(params);
           },
           (error: any) => {
             console.error('DELETE-GRADE Request failed', error);

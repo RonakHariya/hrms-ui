@@ -10,6 +10,9 @@ import { Role } from '../../../models/role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Designation } from '../../../models/designation.model';
+import { leadingSpaceValidator } from '../Validations/leadingSpace.validator';
+import { trailingSpaceValidator } from '../Validations/trailingSpace.validator';
+import { whitespaceValidator } from '../Validations/whiteSpace.validator';
 
 @Component({
   selector: 'designation-role',
@@ -49,10 +52,45 @@ export class DesignationFormComponent {
   initForm() {
     this.designationForm = this.formBuilder.group({
       id: [''],
-      designationId: ['', Validators.required],
-      designationName: ['', Validators.required],
-      designationDesc: ['', Validators.required],
-      orgCode: ['', Validators.required],
+      designationId: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z0-9]{1,50}$'),
+        ],
+      ],
+      designationName: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z-_ ]{1,100}$'),
+        ],
+      ],
+      designationDesc: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          Validators.pattern('^[a-zA-Z0-9 ]{1,250}$'),
+        ],
+      ],
+      orgCode: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z-_]{1,10}$'),
+        ],
+      ],
       createdBy: ['Admin'],
       createdAt: [''],
       updatedBy: [''],

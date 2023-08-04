@@ -6,7 +6,7 @@ import { Data, Router } from '@angular/router';
 import { ApiResponse } from 'src/app/modules/master/models/response';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpParams } from '@angular/common/http';
-import { PopupComponent } from '../../../helper/popup/popup.component';
+import { PopupComponent } from '../../helper/popup/popup.component';
 
 @Component({
   selector: 'app-designation',
@@ -63,9 +63,12 @@ export class DesignationComponent {
           .deleteDesignation(event['data'].designationId)
           .subscribe(
             (response: ApiResponse) => {
-              console.log('DELETE-ROLE Request successful', response);
-              this.openPopup('Designation deleted successfully!!');
-              this.router.navigate(['/master/designation']);
+              console.log('DELETE-DESIGNATION Request successful', response);
+
+              let params = new HttpParams();
+              params = params.set('page', 0);
+              params = params.set('size', 10);
+              this.searchFunction(params);
               this.designationService.notify(
                 'Designation Deleted successfully..!'
               );

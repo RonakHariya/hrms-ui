@@ -8,6 +8,9 @@ import {
 import { RoleService } from '../../../services/role.service';
 import { Role } from '../../../models/role.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { leadingSpaceValidator } from '../Validations/leadingSpace.validator';
+import { trailingSpaceValidator } from '../Validations/trailingSpace.validator';
+import { whitespaceValidator } from '../Validations/whiteSpace.validator';
 
 @Component({
   selector: 'role-form',
@@ -45,9 +48,36 @@ export class RoleFormComponent {
   initForm() {
     this.roleForm = this.formBuilder.group({
       id: [''],
-      roleId: ['', Validators.required],
-      roleName: ['', Validators.required],
-      orgCode: ['', Validators.required],
+      roleId: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^(?!.*s)[A-Za-z0-9]{1,50}$'),
+        ],
+      ],
+      roleName: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z-_ ]{1,100}$'),
+        ],
+      ],
+      orgCode: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z-_]{1,10}$'),
+        ],
+      ],
       createdBy: ['Admin'],
     });
   }

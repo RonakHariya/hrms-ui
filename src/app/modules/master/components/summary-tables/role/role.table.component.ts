@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Role } from '../../../../models/role.model';
-import { RoleService } from '../../../../services/role.service';
-import { ColumnsMetadata } from '../../../../models/columnMetaData';
+
 import { Data, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { PopupComponent } from '../../../helper/popup/popup.component';
 import { ApiResponse } from 'src/app/modules/master/models/response';
+import { ColumnsMetadata } from '../../../models/columnMetaData';
+import { Role } from '../../../models/role.model';
+import { RoleService } from '../../../services/role.service';
+import { PopupComponent } from '../../helper/popup/popup.component';
 
 @Component({
   selector: 'app-role',
@@ -86,9 +87,12 @@ export class RoleComponent {
         this.roleService.deleteRole(event['data'].roleId).subscribe(
           (response: ApiResponse) => {
             console.log('DELETE-ROLE Request successful', response);
-            this.openPopup('Role deleted successfully!!');
 
             this.roleService.notify('Role Deleted successfully..!');
+            let params = new HttpParams();
+            params = params.set('page', 0);
+            params = params.set('size', 10);
+            this.searchFunction(params);
           },
           (error: any) => {
             console.error('DELETE-ROLE Request failed', error);

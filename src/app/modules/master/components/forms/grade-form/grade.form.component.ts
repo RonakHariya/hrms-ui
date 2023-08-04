@@ -5,11 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { DesignationService } from '../../../services/designation.service';
 import { GradeService } from '../../../services/grade.service';
+import { leadingSpaceValidator } from '../Validations/leadingSpace.validator';
+import { trailingSpaceValidator } from '../Validations/trailingSpace.validator';
+import { whitespaceValidator } from '../Validations/whiteSpace.validator';
 
 @Component({
   selector: 'app-grade-form',
-  templateUrl: './grade-form.component.html',
-  styleUrls: ['./grade-form.component.scss'],
+  templateUrl: './grade.form.component.html',
+  styleUrls: ['./grade.form.component.scss'],
 })
 export class GradeFormComponent {
   gradeForm!: FormGroup;
@@ -45,10 +48,37 @@ export class GradeFormComponent {
   initForm() {
     this.gradeForm = this.formBuilder.group({
       id: [''],
-      gradeId: ['', Validators.required],
-      gradeName: ['', Validators.required],
-      gradeType: [''],
-      orgCode: ['', Validators.required],
+      gradeId: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z0-9]{1,50}$'),
+        ],
+      ],
+      gradeName: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z-_ ]{1,100}$'),
+        ],
+      ],
+      gradeType: ['', Validators.required],
+      orgCode: [
+        '',
+        [
+          Validators.required,
+          leadingSpaceValidator,
+          trailingSpaceValidator,
+          whitespaceValidator,
+          Validators.pattern('^[a-zA-Z-_]{1,10}$'),
+        ],
+      ],
     });
   }
 
